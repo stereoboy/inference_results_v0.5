@@ -26,7 +26,8 @@ if not os.path.isfile(NMS_OPT_PLUGIN_LIBRARY):
     ))
 ctypes.CDLL(NMS_OPT_PLUGIN_LIBRARY)
 
-sys.path.append(os.getcwd())
+sys.path.insert(0, os.getcwd())
+#sys.path.append(os.getcwd())
 
 import argparse
 import enum
