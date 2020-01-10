@@ -299,7 +299,7 @@ def main():
     default_formats_map = {
         "resnet": ["int8_linear"],
         "mobilenet": ["int8_chw4"],
-        "ssd-small": ["int8_linear", "int8_chw4"],
+        "ssd-small": ["int8_linear", "int8_chw4", "fp32"],
         "ssd-large": ["int8_linear"]
     }
 
