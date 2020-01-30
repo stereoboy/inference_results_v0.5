@@ -1,6 +1,6 @@
 {
     "benchmark": "ssd-large",
-    "config_name": "Xavier_ssd-large_Offline",
+    "config_name": "GeforceRTX2080Ti_ssd-large_Offline",
     "scenario": "Offline",
     "ssd-large": {
         "concurrent_offline_expected_qps": 50,
@@ -21,5 +21,5 @@
         "tensor_path": "${PREPROCESSED_DATA_DIR}/coco/val2017/SSDResNet34/int8_linear",
         "use_graphs": false
     },
-    "system_id": "Xavier"
+    "system_id": "GeforceRTX2080Ti"
 }
