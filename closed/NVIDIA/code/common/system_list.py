@@ -19,4 +19,5 @@ system_list = ([
     ("TitanRTXx4", "TITAN RTX", 4),
     ("Xavier", "Xavier", 1),
     ("GeforceRTX2080Ti", "GeForce RTX 2080 Ti", 1),
+    ("GeforceGTX1080Ti", "GeForce GTX 1080 Ti", 1),
 ])

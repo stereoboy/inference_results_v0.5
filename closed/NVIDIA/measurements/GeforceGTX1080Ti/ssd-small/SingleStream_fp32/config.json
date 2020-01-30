@@ -1,0 +1,16 @@
+{
+    "benchmark": "ssd-small",
+    "config_name": "GeforceGTX1080Ti_ssd-small_SingleStream",
+    "scenario": "SingleStream",
+    "ssd-small": {
+        "gpu_batch_size": 1,
+        "gpu_single_stream_expected_latency_ns": 1621000,
+        "input_dtype": "float32",
+        "input_format": "linear",
+        "map_path": "data_maps/coco/val_map.txt",
+        "precision": "float32",
+        "tensor_path": "${PREPROCESSED_DATA_DIR}/coco/val2017/SSDMobileNet/float32_linear",
+        "use_graphs": false
+    },
+    "system_id": "GeforceGTX1080Ti"
+}

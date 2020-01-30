@@ -1,0 +1,18 @@
+{
+    "benchmark": "ssd-small",
+    "config_name": "GeforceGTX1080Ti_ssd-small_Offline",
+    "scenario": "Offline",
+    "ssd-small": {
+        "concurrent_offline_expected_qps": 2478,
+        "gpu_batch_size": 128,
+        "gpu_inference_streams": 1,
+        "gpu_offline_expected_qps": 2116.8,
+        "input_dtype": "float32",
+        "input_format": "linear",
+        "map_path": "data_maps/coco/val_map.txt",
+        "precision": "float32",
+        "tensor_path": "${PREPROCESSED_DATA_DIR}/coco/val2017/SSDMobileNet/float32_linear",
+        "use_graphs": false
+    },
+    "system_id": "GeforceGTX1080Ti"
+}
