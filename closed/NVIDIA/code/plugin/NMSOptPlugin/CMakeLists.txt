@@ -79,8 +79,12 @@ target_compile_features(nmsoptplugin PUBLIC cxx_std_11)
 
 # Set sm versions
 string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_70,code=sm_70")
+# Xavier
 string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_72,code=sm_72")
+# Geforce RTX 2080 Ti
 string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_75,code=sm_75")
+# Geforce GTX 1080 Ti
+string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_61,code=sm_61")
 
 # Link TensorRT's nvinfer lib
 target_link_libraries(nmsoptplugin PUBLIC ${NVINFER_LIB})
