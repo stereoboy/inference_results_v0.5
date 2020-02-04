@@ -37,6 +37,8 @@ def get_benchmark(benchmark_name, conf):
         return MobileNet(conf)
     elif benchmark_name == "ssd-small":
         SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet").SSDMobileNet
+        #SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssd_mobilenet_v2_coco_2018_03_29").SSDMobileNet
+        #SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssdlite_mobilenet_v2_coco_2018_05_09").SSDMobileNet
         return SSDMobileNet(conf)
     elif benchmark_name == "ssd-large":
         SSDResNet34 = import_module("code.ssd-large.tensorrt.SSDResNet34").SSDResNet34

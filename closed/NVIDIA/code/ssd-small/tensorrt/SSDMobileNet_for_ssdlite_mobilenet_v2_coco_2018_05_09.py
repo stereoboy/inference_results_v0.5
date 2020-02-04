@@ -17,7 +17,6 @@ import argparse
 import json
 import ctypes
 import os, sys
-
 # The plugin .so file has to be loaded at global scope and before `import torch` to avoid cuda version mismatch.
 NMS_OPT_PLUGIN_LIBRARY="build/plugins/NMSOptPlugin/libnmsoptplugin.so"
 if not os.path.isfile(NMS_OPT_PLUGIN_LIBRARY):
@@ -27,6 +26,7 @@ if not os.path.isfile(NMS_OPT_PLUGIN_LIBRARY):
     ))
 ctypes.CDLL(NMS_OPT_PLUGIN_LIBRARY)
 
+import numpy as np
 import graphsurgeon as gs
 import tensorflow as tf
 import tensorrt as trt
@@ -37,6 +37,8 @@ from code.common import logging, dict_get
 from code.common.builder import BenchmarkBuilder
 from importlib import import_module
 SSDMobileNetEntropyCalibrator = import_module("code.ssd-small.tensorrt.calibrator").SSDMobileNetEntropyCalibrator
+
+trt.Logger(trt.Logger.VERBOSE)
 
 Input = gs.create_node("Input",
     op="Placeholder",
@@ -59,7 +61,7 @@ Postprocessor = gs.create_plugin_node(name="Postprocessor", op="NMS_OPT_TRT",
     keepTopK=100,
     numClasses=91,
     #inputOrder=[0, 7, 6],
-    inputOrder=[6, 0, 12],
+    inputOrder=[0, 6, 12],
     confSigmoid=1,
     confSoftmax=0,
     isNormalized=1,
@@ -68,9 +70,14 @@ concat_priorbox = gs.create_node(name="concat_priorbox", op="ConcatV2", dtype=tf
 #concat_box_loc = gs.create_plugin_node("concat_box_loc", op="FlattenConcat_TRT", dtype=tf.float32, axis=1, ignoreBatch=0)
 #concat_box_conf = gs.create_plugin_node("concat_box_conf", op="FlattenConcat_TRT", dtype=tf.float32, axis=1, ignoreBatch=0)
 
+# dummy Const Node
+#const_node = gs.create_node(name='Const', op="Const", dtype=tf.float32, value=np.array(200.0)) 
+const_node = gs.create_node(name='Const', op="Const", dtype=tf.int32, value=np.array([1, 1], dtype=np.int32))
+
 namespace_plugin_map = {
-    #"MultipleGridAnchorGenerator/Concatenate": concat_priorbox,
-    "Concatenate": concat_priorbox,
+#    "MultipleGridAnchorGenerator/Concatenate": concat_priorbox,
+#    "Concatenate": concat_priorbox,
+#    "MultipleGridAnchorGenerator/assert_equal": concat_priorbox,
     "MultipleGridAnchorGenerator": PriorBox,
     "Postprocessor": Postprocessor,
     "image_tensor": Input,
@@ -104,16 +111,21 @@ def preprocess(dynamic_graph):
     # Disconnect concat/axis and concat_1/axis from NMS.
     dynamic_graph.find_nodes_by_op("NMS_OPT_TRT")[0].input.remove("concat/axis")
     dynamic_graph.find_nodes_by_op("NMS_OPT_TRT")[0].input.remove("concat_1/axis")
-    print("MultipleGridAnchorGenerator: ", dynamic_graph.find_nodes_by_name("MultipleGridAnchorGenerator"))
-    print("concat_priorbox: ", dynamic_graph.find_nodes_by_name("concat_priorbox"))
-    print("NMS_OPT_TRT: ", dynamic_graph.find_nodes_by_name("NMS_OPT_TRT"))
-    #print("TEST", dynamic_graph.find_nodes_by_name("Input")[0].input)
-    #dynamic_graph.find_nodes_by_name("Input")[0].input.remove("image_tensor:0")
 
-    #dynamic_graph.find_nodes_by_name("MultipleGridAnchorGenerator")[0].input.remove("Const")
+    #dynamic_graph.find_nodes_by_op("NMS_OPT_TRT")[0].input.append("concat_priorbox")
 
-    #dynamic_graph.remove(dynamic_graph.find_nodes_by_op("GridAnchor_TRT"))
-    #dynamic_graph.remove(dynamic_graph.find_nodes_by_op("NMS_OPT_TRT"))
+
+    dynamic_graph.append(concat_priorbox)
+    dynamic_graph.append(const_node)
+    dynamic_graph.connect(dynamic_graph.find_nodes_by_name("MultipleGridAnchorGenerator")[0], dynamic_graph.find_nodes_by_name("concat_priorbox")[0])
+    dynamic_graph.connect(dynamic_graph.find_nodes_by_name("concat_priorbox")[0], dynamic_graph.find_nodes_by_name("Postprocessor")[0])
+    dynamic_graph.connect(dynamic_graph.find_nodes_by_name("Const")[0], dynamic_graph.find_nodes_by_name("MultipleGridAnchorGenerator")[0])
+
+#    dynamic_graph.connect(dynamic_graph.find_nodes_by_name("MultipleGridAnchorGenerator")[0], dynamic_graph.find_nodes_by_name("Postprocessor")[0])
+    #dynamic_graph.find_nodes_by_name("Postprocessor")[0].input.append("MultipleGridAnchorGenerator")
+    #dynamic_graph.find_nodes_by_name("concat_priorbox")[0].input.append("MultipleGridAnchorGenerator")
+    #dynamic_graph.find_nodes_by_name("Postprocessor")[0].input.append("concat_priorbox")
+
     print("########################################")
     for node in dynamic_graph:
         print(node.name)
@@ -124,6 +136,18 @@ def preprocess(dynamic_graph):
             print(node)
     print("########################################")
 
+
+    print('=======================================================================')
+    print("MultipleGridAnchorGenerator: ", dynamic_graph.find_nodes_by_name("MultipleGridAnchorGenerator"))
+    print('=======================================================================')
+    print("concat_priorbox: ", dynamic_graph.find_nodes_by_name("concat_priorbox"))
+    print('=======================================================================')
+    print("NMS_OPT_TRT: ", dynamic_graph.find_nodes_by_name("Postprocessor"))
+    #dynamic_graph.find_nodes_by_name("Input")[0].input.remove("image_tensor:0")
+
+    #dynamic_graph.remove(dynamic_graph.find_nodes_by_op("GridAnchor_TRT"))
+    #dynamic_graph.remove(dynamic_graph.find_nodes_by_op("NMS_OPT_TRT"))
+
 class SSDMobileNet(BenchmarkBuilder):
 
     def __init__(self, args):
@@ -132,8 +156,7 @@ class SSDMobileNet(BenchmarkBuilder):
 
         # Model path
         #self.model_path = dict_get(args, "model_path", default="build/models/SSDMobileNet/frozen_inference_graph.pb")
-        self.model_path = dict_get(args, "model_path", default="build/models/ssd_mobilenet_v2_coco_2018_03_29/frozen_inference_graph.pb")
-        #self.model_path = dict_get(args, "model_path", default="build/models/ssd_inception_v2_coco_2018_01_28/frozen_inference_graph.pb")
+        self.model_path = dict_get(args, "model_path", default="build/models/ssdlite_mobilenet_v2_coco_2018_05_09/frozen_inference_graph.pb")
 
         if self.precision == "int8":
             calib_batch_size = dict_get(self.args, "calib_batch_size", default=1)
@@ -154,7 +177,7 @@ class SSDMobileNet(BenchmarkBuilder):
         self.network = self.builder.create_network()
 
         # Do graph surgery on pb graph and convert to UFF.
-        uff_model = uff.from_tensorflow_frozen_model(self.model_path, preprocessor="code/ssd-small/tensorrt/SSDMobileNet_for_ssd_mobilenet_v2_coco_2018_03_29.py")
+        uff_model = uff.from_tensorflow_frozen_model(self.model_path, preprocessor="code/ssd-small/tensorrt/SSDMobileNet_for_ssdlite_mobilenet_v2_coco_2018_05_09.py")
 
         # Parse UFF model and populate network.
         parser = trt.UffParser()
