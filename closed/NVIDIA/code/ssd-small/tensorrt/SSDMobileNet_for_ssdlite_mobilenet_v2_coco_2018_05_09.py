@@ -162,7 +162,7 @@ class SSDMobileNet(BenchmarkBuilder):
             calib_batch_size = dict_get(self.args, "calib_batch_size", default=1)
             calib_max_batches = dict_get(self.args, "calib_max_batches", default=500)
             force_calibration = dict_get(self.args, "force_calibration", default=False)
-            cache_file = dict_get(self.args, "cache_file", default="code/ssd-small/tensorrt/calibrator.cache")
+            cache_file = dict_get(self.args, "cache_file", default="code/ssd-small/tensorrt/calibrator_ssdlite_mobilenet_v2_coco_2018_05_09.cache")
             preprocessed_data_dir = dict_get(self.args, "preprocessed_data_dir", default="build/preprocessed_data")
             calib_data_map = dict_get(self.args, "calib_data_map", default="data_maps/coco/cal_map.txt")
             calib_image_dir = os.path.join(preprocessed_data_dir, "coco/train2017/SSDMobileNet/fp32")
