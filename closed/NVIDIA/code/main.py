@@ -37,8 +37,10 @@ def get_benchmark(benchmark_name, conf):
         return MobileNet(conf)
     elif benchmark_name == "ssd-small":
         SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet").SSDMobileNet
+        #SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssd_inception_v2_coco_2018_01_28").SSDMobileNet
         #SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssd_mobilenet_v2_coco_2018_03_29").SSDMobileNet
         #SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssdlite_mobilenet_v2_coco_2018_05_09").SSDMobileNet
+        #SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssdlite_mobilenet_v3_large_300x300_coco").SSDMobileNet
         return SSDMobileNet(conf)
     elif benchmark_name == "ssd-large":
         SSDResNet34 = import_module("code.ssd-large.tensorrt.SSDResNet34").SSDResNet34
@@ -60,7 +62,7 @@ def apply_overrides(config, keys):
     return config
 
 def launch_handle_generate_engine(benchmark_name, config, gpu, dla):
-    retries = 3
+    retries = 1 
     timeout = 7200
     success = False
     for i in range(retries):
