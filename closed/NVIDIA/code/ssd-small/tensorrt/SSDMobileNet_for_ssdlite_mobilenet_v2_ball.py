@@ -158,13 +158,13 @@ class SSDMobileNet(BenchmarkBuilder):
         print(args)
 
         # Model path
-        self.model_path = dict_get(args, "model_path", default="build/models/frozen_model_ssdlite_mobilenet_v2_ball_2019_09_04/frozen_inference_graph.pb")
+        self.model_path = dict_get(args, "model_path", default="build/models/frozen_model_ssdlite_mobilenet_v2_ball_2020_02_26/frozen_inference_graph.pb")
 
         if self.precision == "int8":
             calib_batch_size = dict_get(self.args, "calib_batch_size", default=1)
             calib_max_batches = dict_get(self.args, "calib_max_batches", default=500)
             force_calibration = dict_get(self.args, "force_calibration", default=False)
-            cache_file = dict_get(self.args, "cache_file", default="code/ssd-small/tensorrt/calibrator_ssdlite_mobilenet_v2_ball_2019_09_04.cache")
+            cache_file = dict_get(self.args, "cache_file", default="code/ssd-small/tensorrt/calibrator_ssdlite_mobilenet_v2_ball.cache")
             preprocessed_data_dir = dict_get(self.args, "preprocessed_data_dir", default="build/preprocessed_data")
             calib_data_map = dict_get(self.args, "calib_data_map", default="data_maps/coco/cal_map.txt")
             calib_image_dir = os.path.join(preprocessed_data_dir, "coco/train2017/SSDMobileNet/fp32")
@@ -179,7 +179,7 @@ class SSDMobileNet(BenchmarkBuilder):
         self.network = self.builder.create_network()
 
         # Do graph surgery on pb graph and convert to UFF.
-        uff_model = uff.from_tensorflow_frozen_model(self.model_path, preprocessor="code/ssd-small/tensorrt/SSDMobileNet_for_ssdlite_mobilenet_v2_ball_2019_09_04.py")
+        uff_model = uff.from_tensorflow_frozen_model(self.model_path, preprocessor="code/ssd-small/tensorrt/SSDMobileNet_for_ssdlite_mobilenet_v2_ball.py")
 
         # Parse UFF model and populate network.
         parser = trt.UffParser()
