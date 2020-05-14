@@ -25,6 +25,9 @@ plugin_map = {
 
 scenario_result_regex = {
     "SingleStream": r"([0-9]+th percentile latency \(ns\) +: [0-9\.]+)",
+    "SingleStreamB2": r"([0-9]+th percentile latency \(ns\) +: [0-9\.]+)",
+    "SingleStreamB4": r"([0-9]+th percentile latency \(ns\) +: [0-9\.]+)",
+    "SingleStreamB8": r"([0-9]+th percentile latency \(ns\) +: [0-9\.]+)",
     "MultiStream": r"(Samples per query : [0-9\.]+)",
     "Offline": r"(Samples per second: [0-9\.]+)",
     "Server": r"(Scheduled samples per second +: [0-9\.]+)",
@@ -41,7 +44,9 @@ benchmark_qsl_size_map = {
 class BenchmarkHarness():
 
     def __init__(self, args, name=""):
+        print ("BenchmarkHarness (")
         print (args)
+        print ("BenchmarkHarness )")
         self.args = args
         self.name = name
         self.verbose = dict_get(args, "verbose", default=None)
@@ -113,6 +118,9 @@ class BenchmarkHarness():
         # required settings for each scenario
         required_settings_map = {
             "SingleStream": ["qsl_rng_seed", "sample_index_rng_seed", "schedule_rng_seed"], # "single_stream_expected_latency_ns", See: https://github.com/mlperf/inference/issues/471
+            "SingleStreamB2": ["qsl_rng_seed", "sample_index_rng_seed", "schedule_rng_seed"], # "single_stream_expected_latency_ns", See: https://github.com/mlperf/inference/issues/471
+            "SingleStreamB4": ["qsl_rng_seed", "sample_index_rng_seed", "schedule_rng_seed"], # "single_stream_expected_latency_ns", See: https://github.com/mlperf/inference/issues/471
+            "SingleStreamB8": ["qsl_rng_seed", "sample_index_rng_seed", "schedule_rng_seed"], # "single_stream_expected_latency_ns", See: https://github.com/mlperf/inference/issues/471
             "Offline": ["offline_expected_qps", "qsl_rng_seed", "sample_index_rng_seed", "schedule_rng_seed"],
             "MultiStream": ["multi_stream_samples_per_query", "qsl_rng_seed", "sample_index_rng_seed", "schedule_rng_seed"],
             "Server": ["server_target_qps", "qsl_rng_seed", "sample_index_rng_seed", "schedule_rng_seed"],
@@ -121,6 +129,9 @@ class BenchmarkHarness():
         # optional settings that we support overriding
         optional_settings_map = {
             "SingleStream": [ "single_stream_target_latency_percentile", "min_query_count" ],
+            "SingleStreamB2": [ "single_stream_target_latency_percentile", "min_query_count" ],
+            "SingleStreamB4": [ "single_stream_target_latency_percentile", "min_query_count" ],
+            "SingleStreamB8": [ "single_stream_target_latency_percentile", "min_query_count" ],
             "Offline": [ "min_query_count" ],
             "MultiStream": [ "multi_stream_target_qps", "multi_stream_target_latency_ns", "multi_stream_max_async_queries", "multi_stream_target_latency_percentile", "min_query_count" ],
             "Server": [ "server_target_latency_percentile", "server_target_latency_ns", "min_query_count" ],
@@ -210,6 +221,12 @@ class BenchmarkHarness():
 
         if self.scenario == "SingleStream":
             harness_flags = common_args.SINGLE_STREAM_PARAMS
+        elif self.scenario == "SingleStreamB2":
+            harness_flags = common_args.SINGLE_STREAM_PARAMS
+        elif self.scenario == "SingleStreamB4":
+            harness_flags = common_args.SINGLE_STREAM_PARAMS
+        elif self.scenario == "SingleStreamB8":
+            harness_flags = common_args.SINGLE_STREAM_PARAMS
         elif self.scenario == "Offline":
             harness_flags = common_args.OFFLINE_PARAMS
         elif self.scenario == "MultiStream":
@@ -232,6 +249,10 @@ class BenchmarkHarness():
         self.build_configs(flag_dict)
 
         argstr = args_to_string(flag_dict) + " --scenario " + self.scenario + " --model " + self.name
+
+        print ("run_harness (")
+        print (common_args.SINGLE_STREAM_PARAMS)
+        print ("run_harness )")
 
         if self.name in ["ssd-small", "ssd-large"]:
             argstr += " --response_postprocess coco"

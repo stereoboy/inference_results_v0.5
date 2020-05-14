@@ -117,6 +117,12 @@ def handle_run_harness(benchmark_name, config, gpu=True, dla=True):
 
     if config["scenario"] == "SingleStream":
         arglist = common_args.SINGLE_STREAM_HARNESS_ARGS
+    elif config["scenario"] == "SingleStreamB2":
+        arglist = common_args.SINGLE_STREAM_HARNESS_ARGS
+    elif config["scenario"] == "SingleStreamB4":
+        arglist = common_args.SINGLE_STREAM_HARNESS_ARGS
+    elif config["scenario"] == "SingleStreamB8":
+        arglist = common_args.SINGLE_STREAM_HARNESS_ARGS
     elif config["scenario"] == "Offline":
         arglist = common_args.OFFLINE_HARNESS_ARGS
     elif config["scenario"] == "MultiStream":
@@ -272,7 +278,7 @@ def main():
             if benchmark in benchmarks_legacy_map:
                 benchmarks[i] = benchmarks_legacy_map[benchmark]
 
-    scenarios = ["SingleStream", "MultiStream", "Offline", "Server"]
+    scenarios = ["SingleStream", "SingleStreamB2", "SingleStreamB8", "MultiStream", "Offline", "Server"]
     scenarios_legacy_map = {
         "single_stream": "SingleStream",
         "multi_stream": "MultiStream",

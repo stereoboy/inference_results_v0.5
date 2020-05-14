@@ -103,6 +103,12 @@ class BenchmarkBuilder(AbstractBuilder):
 
         if self.scenario == "SingleStream":
             batch_size = 1
+        elif self.scenario == "SingleStreamB2":
+            batch_size = 2
+        elif self.scenario == "SingleStreamB4":
+            batch_size = 4
+        elif self.scenario == "SingleStreamB8":
+            batch_size = 8
         elif self.scenario in ["Server", "Offline", "MultiStream"]:
             batch_size = self.args.get("batch_size", 1)
         else:
@@ -121,6 +127,9 @@ class BenchmarkBuilder(AbstractBuilder):
             # Build engines
             self.builder.max_batch_size = bs
             engine = self.builder.build_engine(self.network, self.builder_config)
+            print("Build engines succeeeded.")
+            print("Build engines succeeeded.")
+            print("Build engines succeeeded.")
             buf = engine.serialize()
             with open(engine_name, 'wb') as f:
                 f.write(buf)
