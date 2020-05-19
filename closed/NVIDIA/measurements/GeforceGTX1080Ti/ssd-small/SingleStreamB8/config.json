@@ -1,9 +1,9 @@
 {
     "benchmark": "ssd-small",
-    "config_name": "GeforceGTX1080Ti_ssd-small_SingleStream",
-    "scenario": "SingleStream",
+    "config_name": "GeforceGTX1080Ti_ssd-small_SingleStreamB8",
+    "scenario": "SingleStreamB8",
     "ssd-small": {
-        "gpu_batch_size": 1,
+        "gpu_batch_size": 8,
         "gpu_single_stream_expected_latency_ns": 1621000,
         "input_dtype": "int8",
         "input_format": "chw4",
