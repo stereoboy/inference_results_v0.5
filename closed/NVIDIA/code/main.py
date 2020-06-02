@@ -278,7 +278,7 @@ def main():
             if benchmark in benchmarks_legacy_map:
                 benchmarks[i] = benchmarks_legacy_map[benchmark]
 
-    scenarios = ["SingleStream", "SingleStreamB2", "SingleStreamB8", "MultiStream", "Offline", "Server"]
+    scenarios = ["SingleStream", "SingleStreamB2", "SingleStreamB4", "SingleStreamB8", "MultiStream", "Offline", "Server"]
     scenarios_legacy_map = {
         "single_stream": "SingleStream",
         "multi_stream": "MultiStream",
