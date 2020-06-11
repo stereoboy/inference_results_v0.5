@@ -3,6 +3,7 @@
     "config_name": "GeforceRTX2080Ti_ssd-small_SingleStreamB4",
     "scenario": "SingleStreamB4",
     "ssd-small": {
+        "gpu_multi_stream_samples_per_query": 4,
         "gpu_batch_size": 4,
         "gpu_single_stream_expected_latency_ns": 1621000,
         "input_dtype": "int8",
