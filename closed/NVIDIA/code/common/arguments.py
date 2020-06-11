@@ -409,6 +409,9 @@ HARNESS_ARGS = ["verbose", "scenario", "precision"] + LOADGEN_ARGS + LWIS_ARGS +
 # Scenario dependent arguments. These are prefixed with device: "gpu_", "dla_", "concurrent_"
 OFFLINE_PARAMS = [ "offline_expected_qps" ]
 SINGLE_STREAM_PARAMS = [ "single_stream_expected_latency_ns" ]
+SINGLE_STREAM_B2_PARAMS = [ "single_stream_expected_latency_ns", "multi_stream_samples_per_query" ]
+SINGLE_STREAM_B4_PARAMS = [ "single_stream_expected_latency_ns", "multi_stream_samples_per_query" ]
+SINGLE_STREAM_B8_PARAMS = [ "single_stream_expected_latency_ns", "multi_stream_samples_per_query" ]
 MULTI_STREAM_PARAMS = [ "multi_stream_samples_per_query" ]
 SERVER_PARAMS = []
 

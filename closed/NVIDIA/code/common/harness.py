@@ -118,9 +118,9 @@ class BenchmarkHarness():
         # required settings for each scenario
         required_settings_map = {
             "SingleStream": ["qsl_rng_seed", "sample_index_rng_seed", "schedule_rng_seed"], # "single_stream_expected_latency_ns", See: https://github.com/mlperf/inference/issues/471
-            "SingleStreamB2": ["qsl_rng_seed", "sample_index_rng_seed", "schedule_rng_seed"], # "single_stream_expected_latency_ns", See: https://github.com/mlperf/inference/issues/471
-            "SingleStreamB4": ["qsl_rng_seed", "sample_index_rng_seed", "schedule_rng_seed"], # "single_stream_expected_latency_ns", See: https://github.com/mlperf/inference/issues/471
-            "SingleStreamB8": ["qsl_rng_seed", "sample_index_rng_seed", "schedule_rng_seed"], # "single_stream_expected_latency_ns", See: https://github.com/mlperf/inference/issues/471
+            "SingleStreamB2": ["multi_stream_samples_per_query", "qsl_rng_seed", "sample_index_rng_seed", "schedule_rng_seed"], # "single_stream_expected_latency_ns", See: https://github.com/mlperf/inference/issues/471
+            "SingleStreamB4": ["multi_stream_samples_per_query", "qsl_rng_seed", "sample_index_rng_seed", "schedule_rng_seed"], # "single_stream_expected_latency_ns", See: https://github.com/mlperf/inference/issues/471
+            "SingleStreamB8": ["multi_stream_samples_per_query", "qsl_rng_seed", "sample_index_rng_seed", "schedule_rng_seed"], # "single_stream_expected_latency_ns", See: https://github.com/mlperf/inference/issues/471
             "Offline": ["offline_expected_qps", "qsl_rng_seed", "sample_index_rng_seed", "schedule_rng_seed"],
             "MultiStream": ["multi_stream_samples_per_query", "qsl_rng_seed", "sample_index_rng_seed", "schedule_rng_seed"],
             "Server": ["server_target_qps", "qsl_rng_seed", "sample_index_rng_seed", "schedule_rng_seed"],
@@ -174,6 +174,7 @@ class BenchmarkHarness():
                 param_name = param
                 if param in options_map:
                     param_name = options_map[param]
+
                 value = flag_dict[param]
                 if param_name in parameter_scaling_map:
                     value = value * parameter_scaling_map[param_name]
@@ -222,11 +223,11 @@ class BenchmarkHarness():
         if self.scenario == "SingleStream":
             harness_flags = common_args.SINGLE_STREAM_PARAMS
         elif self.scenario == "SingleStreamB2":
-            harness_flags = common_args.SINGLE_STREAM_PARAMS
+            harness_flags = common_args.SINGLE_STREAM_B2_PARAMS
         elif self.scenario == "SingleStreamB4":
-            harness_flags = common_args.SINGLE_STREAM_PARAMS
+            harness_flags = common_args.SINGLE_STREAM_B4_PARAMS
         elif self.scenario == "SingleStreamB8":
-            harness_flags = common_args.SINGLE_STREAM_PARAMS
+            harness_flags = common_args.SINGLE_STREAM_B8_PARAMS
         elif self.scenario == "Offline":
             harness_flags = common_args.OFFLINE_PARAMS
         elif self.scenario == "MultiStream":
@@ -250,10 +251,9 @@ class BenchmarkHarness():
 
         argstr = args_to_string(flag_dict) + " --scenario " + self.scenario + " --model " + self.name
 
-        print ("run_harness (")
-        print (common_args.SINGLE_STREAM_PARAMS)
-        print ("run_harness )")
-
+        print("=========================================================")
+        print("argstr:")
+        print(argstr)
         if self.name in ["ssd-small", "ssd-large"]:
             argstr += " --response_postprocess coco"
 

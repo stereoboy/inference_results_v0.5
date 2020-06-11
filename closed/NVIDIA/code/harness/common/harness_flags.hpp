@@ -92,6 +92,9 @@ std::map<std::string, mlperf::LoggingMode> logModeMap = {
 std::map<std::string, mlperf::TestScenario> scenarioMap = {
     {"Offline", mlperf::TestScenario::Offline},
     {"SingleStream", mlperf::TestScenario::SingleStream},
+    {"SingleStreamB2", mlperf::TestScenario::SingleStream},
+    {"SingleStreamB4", mlperf::TestScenario::SingleStream},
+    {"SingleStreamB4", mlperf::TestScenario::SingleStream},
     {"MultiStream", mlperf::TestScenario::MultiStream},
     {"Server", mlperf::TestScenario::Server}
 };
