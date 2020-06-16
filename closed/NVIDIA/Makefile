@@ -235,7 +235,7 @@ build: clone_loadgen link_dataset_dir
 clone_loadgen:
 	@if [ ! -d $(LOADGEN_INCLUDE_DIR) ]; then \
 		echo "Cloning Official MLPerf Inference (For Loadgen Files)" \
-			&& git clone https://github.com/mlperf/inference.git $(INFERENCE_DIR) \
+			&& git clone https://github.com/wom-ai/inference.git -b stereoboy $(INFERENCE_DIR) \
 			&& cd $(INFERENCE_DIR) \
 			&& git checkout $(INFERENCE_HASH) \
 			&& git submodule update --init build \
