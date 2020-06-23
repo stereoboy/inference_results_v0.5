@@ -1,0 +1,105 @@
+[2020-06-22 06:26:22,370 main.py:304 INFO] Using config files: measurements/GeforceRTX2080Ti/ssd-small/SingleStreamB8/config.json
+[2020-06-22 06:26:22,370 __init__.py:142 INFO] Parsing config file measurements/GeforceRTX2080Ti/ssd-small/SingleStreamB8/config.json ...
+[2020-06-22 06:26:22,370 main.py:308 INFO] Processing config "GeforceRTX2080Ti_ssd-small_SingleStreamB8"
+[2020-06-22 06:26:22,370 main.py:118 INFO] Running harness for ssd-small benchmark in SingleStreamB8 scenario...
+[2020-06-22 06:26:22,372 __init__.py:42 INFO] Running command: ./build/bin/harness_default --plugins="build/plugins/NMSOptPlugin/libnmsoptplugin.so" --logfile_outdir="/work/mlperf/inference_results_v0.5/closed/NVIDIA/build/logs/2020.06.22-06.26.22/GeforceRTX2080Ti/ssd-small/SingleStreamB8" --logfile_prefix="mlperf_log_" --test_mode="PerformanceOnly" --warmup_duration=5.0 --use_graphs=false --gpu_batch_size=8 --map_path="data_maps/coco/val_map.txt" --tensor_path="${PREPROCESSED_DATA_DIR}/coco/val2017/SSDMobileNet/int8_chw4" --gpu_engines="./build/engines/GeforceRTX2080Ti/ssd-small/SingleStreamB8/ssd-small-SingleStreamB8-gpu-b8-int8.plan" --performance_sample_count=256 --max_dlas=0 --single_stream_expected_latency_ns=1621000 --mlperf_conf_path="measurements/GeforceRTX2080Ti/ssd-small/SingleStreamB8/mlperf.conf" --user_conf_path="measurements/GeforceRTX2080Ti/ssd-small/SingleStreamB8/user.conf" --scenario SingleStreamB8 --model ssd-small --response_postprocess coco
+BenchmarkHarness (
+{'gpu_multi_stream_samples_per_query': 8, 'gpu_batch_size': 8, 'gpu_single_stream_expected_latency_ns': 1621000, 'input_dtype': 'int8', 'input_format': 'chw4', 'map_path': 'data_maps/coco/val_map.txt', 'precision': 'int8', 'tensor_path': '${PREPROCESSED_DATA_DIR}/coco/val2017/SSDMobileNet/int8_chw4', 'use_graphs': False, 'system_id': 'GeforceRTX2080Ti', 'scenario': 'SingleStreamB8', 'benchmark': 'ssd-small', 'config_name': 'GeforceRTX2080Ti_ssd-small_SingleStreamB8', 'test_mode': 'PerformanceOnly', 'warmup_duration': 5.0, 'log_dir': '/work/mlperf/inference_results_v0.5/closed/NVIDIA/build/logs/2020.06.22-06.26.22'}
+BenchmarkHarness )
+=========================================================
+argstr:
+--plugins="build/plugins/NMSOptPlugin/libnmsoptplugin.so" --logfile_outdir="/work/mlperf/inference_results_v0.5/closed/NVIDIA/build/logs/2020.06.22-06.26.22/GeforceRTX2080Ti/ssd-small/SingleStreamB8" --logfile_prefix="mlperf_log_" --test_mode="PerformanceOnly" --warmup_duration=5.0 --use_graphs=false --gpu_batch_size=8 --map_path="data_maps/coco/val_map.txt" --tensor_path="${PREPROCESSED_DATA_DIR}/coco/val2017/SSDMobileNet/int8_chw4" --gpu_engines="./build/engines/GeforceRTX2080Ti/ssd-small/SingleStreamB8/ssd-small-SingleStreamB8-gpu-b8-int8.plan" --performance_sample_count=256 --max_dlas=0 --single_stream_expected_latency_ns=1621000 --mlperf_conf_path="measurements/GeforceRTX2080Ti/ssd-small/SingleStreamB8/mlperf.conf" --user_conf_path="measurements/GeforceRTX2080Ti/ssd-small/SingleStreamB8/user.conf" --scenario SingleStreamB8 --model ssd-small
+&&&& RUNNING Default_Harness # ./build/bin/harness_default
+[I] mlperf.conf path: measurements/GeforceRTX2080Ti/ssd-small/SingleStreamB8/mlperf.conf
+[I] user.conf path: measurements/GeforceRTX2080Ti/ssd-small/SingleStreamB8/user.conf
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+path: measurements/GeforceRTX2080Ti/ssd-small/SingleStreamB8/mlperf.conf
+model: ssd-small
+scenario: SingleStreamB8
+multi_stream_samples_per_query: 1
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+path: measurements/GeforceRTX2080Ti/ssd-small/SingleStreamB8/user.conf
+model: ssd-small
+scenario: SingleStreamB8
+multi_stream_samples_per_query: 8
+[W] [TRT] TensorRT was linked against cuBLAS 10.2.0 but loaded cuBLAS 10.1.0
+[I] Device:0: ./build/engines/GeforceRTX2080Ti/ssd-small/SingleStreamB8/ssd-small-SingleStreamB8-gpu-b8-int8.plan has been successfully loaded.
+[W] [TRT] TensorRT was linked against cuBLAS 10.2.0 but loaded cuBLAS 10.1.0
+[W] [TRT] TensorRT was linked against cuBLAS 10.2.0 but loaded cuBLAS 10.1.0
+[W] [TRT] TensorRT was linked against cuBLAS 10.2.0 but loaded cuBLAS 10.1.0
+[W] [TRT] TensorRT was linked against cuBLAS 10.2.0 but loaded cuBLAS 10.1.0
+[I] Creating batcher thread: 0 EnableBatcherThreadPerDevice: false
+Starting warmup. Running for a minimum of 5 seconds.
+Finished warmup. Ran for 5.01767s.
+================================================
+MLPerf Results Summary
+================================================
+SUT name : LWIS_Server
+Scenario : Single Stream
+Mode     : Performance
+90th percentile latency (ns) : 2045025
+Result is : VALID
+  Min duration satisfied : Yes
+  Min queries satisfied : Yes
+
+================================================
+Additional Stats
+================================================
+QPS w/ loadgen overhead         : 3911.19
+QPS w/o loadgen overhead        : 499.38
+
+Min latency (ns)                : 1758546
+Max latency (ns)                : 6769865
+Mean latency (ns)               : 2002486
+50.00 percentile latency (ns)   : 2003398
+90.00 percentile latency (ns)   : 2045025
+95.00 percentile latency (ns)   : 2056428
+97.00 percentile latency (ns)   : 2064856
+99.00 percentile latency (ns)   : 2082838
+99.90 percentile latency (ns)   : 2327349
+
+================================================
+Test Parameters Used
+================================================
+samples_per_query : 8
+target_qps : 616.903
+target_latency (ns): 0
+max_async_queries : 1
+min_duration (ms): 60000
+max_duration (ms): 0
+min_query_count : 100000
+max_query_count : 0
+qsl_rng_seed : 3133965575612453542
+sample_index_rng_seed : 665484352860916858
+schedule_rng_seed : 3622009729038561421
+accuracy_log_rng_seed : 0
+accuracy_log_probability : 0
+print_timestamps : false
+performance_issue_unique : false
+performance_issue_same : false
+performance_issue_same_index : 0
+performance_sample_count : 256
+
+No warnings encountered during test.
+
+1 ERROR encountered. See detailed log.
+Device Device:0 processed:
+  100000 batches of size 8
+  Memcpy Calls: 0
+  PerSampleCudaMemcpy Calls: 800000
+  BatchedCudaMemcpy Calls: 0
+&&&& PASSED Default_Harness # ./build/bin/harness_default
+[2020-06-22 06:29:53,605 main.py:155 INFO] Result: 90th percentile latency (ns) : 2045025 and Result is : VALID
+
+======================= Perf harness results: =======================
+
+GeforceRTX2080Ti-SingleStreamB8:
+    ssd-small: 90th percentile latency (ns) : 2045025 and Result is : VALID
+
+
+======================= Accuracy results: =======================
+
+GeforceRTX2080Ti-SingleStreamB8:
+    ssd-small: No accuracy results in PerformanceOnly mode.
+
+Elapsed Time: 212 seconds
