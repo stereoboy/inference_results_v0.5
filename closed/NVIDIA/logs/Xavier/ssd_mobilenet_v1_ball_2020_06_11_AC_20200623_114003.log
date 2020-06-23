@@ -1,0 +1,84 @@
+[2020-06-23 11:44:39,950 main.py:304 INFO] Using config files: measurements/Xavier/ssd-small/SingleStream/config.json
+[2020-06-23 11:44:39,951 __init__.py:142 INFO] Parsing config file measurements/Xavier/ssd-small/SingleStream/config.json ...
+[2020-06-23 11:44:39,951 main.py:308 INFO] Processing config "Xavier_ssd-small_SingleStream"
+[2020-06-23 11:44:39,951 main.py:118 INFO] Running harness for ssd-small benchmark in SingleStream scenario...
+[2020-06-23 11:44:39,959 __init__.py:42 INFO] Running command: ./build/bin/harness_default --plugins="build/plugins/NMSOptPlugin/libnmsoptplugin.so" --logfile_outdir="/home/nvidia/data/inference_results_v0.5/closed/NVIDIA/build/logs/2020.06.23-11.44.39/Xavier/ssd-small/SingleStream" --logfile_prefix="mlperf_log_" --test_mode="AccuracyOnly" --use_graphs=false --gpu_batch_size=1 --map_path="data_maps/coco/val_map.txt" --tensor_path="${PREPROCESSED_DATA_DIR}/coco/val2017/SSDMobileNet/int8_chw4" --gpu_engines="./build/engines/Xavier/ssd-small/SingleStream/ssd-small-SingleStream-gpu-b1-int8.plan" --performance_sample_count=256 --max_dlas=0 --single_stream_expected_latency_ns=1621000 --mlperf_conf_path="measurements/Xavier/ssd-small/SingleStream/mlperf.conf" --user_conf_path="measurements/Xavier/ssd-small/SingleStream/user.conf" --scenario SingleStream --model ssd-small --response_postprocess coco
+BenchmarkHarness (
+{'gpu_batch_size': 1, 'gpu_single_stream_expected_latency_ns': 1621000, 'input_dtype': 'int8', 'input_format': 'chw4', 'map_path': 'data_maps/coco/val_map.txt', 'precision': 'int8', 'tensor_path': '${PREPROCESSED_DATA_DIR}/coco/val2017/SSDMobileNet/int8_chw4', 'use_graphs': False, 'system_id': 'Xavier', 'scenario': 'SingleStream', 'benchmark': 'ssd-small', 'config_name': 'Xavier_ssd-small_SingleStream', 'test_mode': 'AccuracyOnly', 'log_dir': '/home/nvidia/data/inference_results_v0.5/closed/NVIDIA/build/logs/2020.06.23-11.44.39'}
+BenchmarkHarness )
+=========================================================
+argstr:
+--plugins="build/plugins/NMSOptPlugin/libnmsoptplugin.so" --logfile_outdir="/home/nvidia/data/inference_results_v0.5/closed/NVIDIA/build/logs/2020.06.23-11.44.39/Xavier/ssd-small/SingleStream" --logfile_prefix="mlperf_log_" --test_mode="AccuracyOnly" --use_graphs=false --gpu_batch_size=1 --map_path="data_maps/coco/val_map.txt" --tensor_path="${PREPROCESSED_DATA_DIR}/coco/val2017/SSDMobileNet/int8_chw4" --gpu_engines="./build/engines/Xavier/ssd-small/SingleStream/ssd-small-SingleStream-gpu-b1-int8.plan" --performance_sample_count=256 --max_dlas=0 --single_stream_expected_latency_ns=1621000 --mlperf_conf_path="measurements/Xavier/ssd-small/SingleStream/mlperf.conf" --user_conf_path="measurements/Xavier/ssd-small/SingleStream/user.conf" --scenario SingleStream --model ssd-small
+&&&& RUNNING Default_Harness # ./build/bin/harness_default
+[I] mlperf.conf path: measurements/Xavier/ssd-small/SingleStream/mlperf.conf
+[I] user.conf path: measurements/Xavier/ssd-small/SingleStream/user.conf
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+path: measurements/Xavier/ssd-small/SingleStream/mlperf.conf
+model: ssd-small
+scenario: SingleStream
+multi_stream_samples_per_query: 1
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+path: measurements/Xavier/ssd-small/SingleStream/user.conf
+model: ssd-small
+scenario: SingleStream
+multi_stream_samples_per_query: 1
+[I] Device:0: ./build/engines/Xavier/ssd-small/SingleStream/ssd-small-SingleStream-gpu-b1-int8.plan has been successfully loaded.
+[I] Creating batcher thread: 0 EnableBatcherThreadPerDevice: false
+Starting warmup. Running for a minimum of 5 seconds.
+Finished warmup. Ran for 5.01985s.
+
+No warnings encountered during test.
+
+No errors encountered during test.
+Device Device:0 processed:
+  5000 batches of size 1
+  Memcpy Calls: 0
+  PerSampleCudaMemcpy Calls: 0
+  BatchedCudaMemcpy Calls: 5000
+&&&& PASSED Default_Harness # ./build/bin/harness_default
+[2020-06-23 11:45:00,713 main.py:155 INFO] Result: Cannot find performance result. Maybe you are running in AccuracyOnly mode.
+[2020-06-23 11:45:00,725 __init__.py:42 INFO] Running command: python3 build/inference/v0.5/classification_and_detection/tools/accuracy-coco.py --mlperf-accuracy-file /home/nvidia/data/inference_results_v0.5/closed/NVIDIA/build/logs/2020.06.23-11.44.39/Xavier/ssd-small/SingleStream/mlperf_log_accuracy.json             --coco-dir /home/nvidia/data/inference_results_v0.5/closed/NVIDIA/build/preprocessed_data/coco --output-file build/ssd-small-results.json
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(accuracy-coco.py:17468): Gdk-CRITICAL **: 11:45:01.592: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+
+(accuracy-coco.py:17468): Gdk-CRITICAL **: 11:45:01.596: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+loading annotations into memory...
+Done (t=0.86s)
+creating index...
+index created!
+Loading and preparing results...
+DONE (t=0.02s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=15.78s).
+Accumulating evaluation results...
+DONE (t=3.19s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.000
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.000
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.000
+mAP=0.000%
+Traceback (most recent call last):
+  File "code/main.py", line 340, in <module>
+    main()
+  File "code/main.py", line 332, in main
+    handle_run_harness(benchmark_name, benchmark_conf, need_gpu, need_dla)
+  File "code/main.py", line 175, in handle_run_harness
+    benchmark_name, config)
+  File "code/main.py", line 252, in check_accuracy
+    raise RuntimeError("Accuracy = {:.3f}, Threshold = {:.3f}. Accuracy test {:}!".format(accuracy, threshold, accuracy_result))
+RuntimeError: Accuracy = 0.000, Threshold = 21.780. Accuracy test FAILED!
+Makefile:303: recipe for target 'run_harness' failed
+make: *** [run_harness] Error 1
