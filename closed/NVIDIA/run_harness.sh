@@ -44,3 +44,9 @@ echo "Elapsed Time: $runtime seconds"
 echo "Elapsed Time: $runtime seconds" >> ./logs/${DEVICE}/${MODEL}_B8_${DATETIME}.log
 
 make run_harness RUN_ARGS="--benchmarks=ssd-small --scenarios=SingleStream --test_mode=AccuracyOnly"                              2>&1 | tee ./logs/${DEVICE}/${MODEL}_AC_${DATETIME}.log
+
+mkdir -p ./engines/${DEVICE}/${MODEL}
+cp -vf ./build/engines/${DEVICE}/ssd-small/SingleStream/ssd-small-${MODEL}-SingleStreamB1-gpu-b1-int8.plan ./engines/${DEVICE}/${MODEL}
+cp -vf ./build/engines/${DEVICE}/ssd-small/SingleStreamB2/ssd-small-${MODEL}-SingleStreamB2-gpu-b2-int8.plan ./engines/${DEVICE}/${MODEL}
+cp -vf ./build/engines/${DEVICE}/ssd-small/SingleStreamB4/ssd-small-${MODEL}-SingleStreamB4-gpu-b4-int8.plan ./engines/${DEVICE}/${MODEL}
+cp -vf ./build/engines/${DEVICE}/ssd-small/SingleStreamB8/ssd-small-${MODEL}-SingleStreamB8-gpu-b8-int8.plan ./engines/${DEVICE}/${MODEL}
