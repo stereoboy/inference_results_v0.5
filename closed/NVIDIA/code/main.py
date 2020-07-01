@@ -36,15 +36,33 @@ def get_benchmark(benchmark_name, conf):
         MobileNet = import_module("code.mobilenet.tensorrt.MobileNet").MobileNet
         return MobileNet(conf)
     elif benchmark_name == "ssd-small":
-        #SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet").SSDMobileNet
-        #SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssd_inception_v2_coco_2018_01_28").SSDMobileNet
-        #SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssd_mobilenet_v2_coco_2018_03_29").SSDMobileNet
-        #SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssdlite_mobilenet_v2_coco_2018_05_09").SSDMobileNet
-        #SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssdlite_mobilenet_v3_large_300x300_coco").SSDMobileNet
-        #SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssdlite_mobilenet_v2_ball").SSDMobileNet
-        #SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssdlite_mobilenet_v1_ball_2020_06_04").SSDMobileNet
-        #SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssd_mobilenet_v1_ball_2020_06_11").SSDMobileNet
-        SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssd_mobilenet_v1_ball_kernel_1_2020_06_23").SSDMobileNet
+        # check model setup
+        print("\n##################################################################")
+        model_name = os.environ.get('MODEL', None)
+        if model_name is not None:
+            print("Model Name: {}".format(model_name))
+        else:
+            print("Model Name is not set up. Use default ssd_mobilenet_v1_coco_2018_01_28")
+        print("##################################################################\n")
+
+        if model_name == 'ssd_mobilenet_v1_coco_2018_01_28' or model_name == None:
+            SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet").SSDMobileNet
+        elif model_name == 'ssd_inception_v2_coco_2018_01_28':
+            SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssd_inception_v2_coco_2018_01_28").SSDMobileNet
+        elif model_name == 'ssd_mobilenet_v2_coco_2018_03_29':
+            SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssd_mobilenet_v2_coco_2018_03_29").SSDMobileNet
+        elif model_name == 'ssdlite_mobilenet_v2_coco_2018_05_09':
+            SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssdlite_mobilenet_v2_coco_2018_05_09").SSDMobileNet
+        elif model_name == 'ssdlite_mobilenet_v3_large_300x300_coco':
+            SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssdlite_mobilenet_v3_large_300x300_coco").SSDMobileNet
+        elif model_name == 'ssdlite_mobilenet_v2_ball':
+            SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssdlite_mobilenet_v2_ball").SSDMobileNet
+        elif model_name == 'ssdlite_mobilenet_v1_ball_2020_06_04':
+            SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssdlite_mobilenet_v1_ball_2020_06_04").SSDMobileNet
+        elif model_name == 'ssd_mobilenet_v1_ball_2020_06_11':
+            SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssd_mobilenet_v1_ball_2020_06_11").SSDMobileNet
+        elif model_name == 'ssd_mobilenet_v1_ball_kernel_1_2020_06_23':
+            SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssd_mobilenet_v1_ball_kernel_1_2020_06_23").SSDMobileNet
         return SSDMobileNet(conf)
     elif benchmark_name == "ssd-large":
         SSDResNet34 = import_module("code.ssd-large.tensorrt.SSDResNet34").SSDResNet34
@@ -96,6 +114,18 @@ def handle_generate_engine(benchmark_name, config, gpu=True, dla=True):
         arglist = common_args.GENERATE_ENGINE_ARGS
     config = apply_overrides(config, arglist)
 
+    
+    print("\n##################################################################")
+    device_name = os.environ.get('DEVICE', None)
+    if device_name is not None:
+        print("Device Name: {}".format(device_name))
+        print("system_id: {}".format(config['system_id']))
+        if device_name != config['system_id']:
+            print("Device Name({}) does not Match system_id({})".format(device_name, config['system_id']))
+            raise RuntimeError("Device Name({}) does not Match system_id({})".format(device_name, config['system_id']))
+    else:
+        print("Device Name is not set up. Use default {}".format(config['system_id']))
+    print("##################################################################\n")
     if dla and "dla_batch_size" in config:
         config["batch_size"] = config["dla_batch_size"]
         logging.info("Building DLA engine for {:}_{:}_{:}".format(config["system_id"], benchmark_name, config["scenario"]))
