@@ -1,0 +1,100 @@
+[2020-06-26 21:37:31,531 main.py:304 INFO] Using config files: measurements/Xavier/ssd-small/SingleStreamB4/config.json
+[2020-06-26 21:37:31,532 __init__.py:142 INFO] Parsing config file measurements/Xavier/ssd-small/SingleStreamB4/config.json ...
+[2020-06-26 21:37:31,533 main.py:308 INFO] Processing config "Xavier_ssd-small_SingleStreamB4"
+[2020-06-26 21:37:31,533 main.py:118 INFO] Running harness for ssd-small benchmark in SingleStreamB4 scenario...
+[2020-06-26 21:37:31,540 __init__.py:42 INFO] Running command: ./build/bin/harness_default --plugins="build/plugins/NMSOptPlugin/libnmsoptplugin.so" --logfile_outdir="/home/nvidia/data/inference_results_v0.5/closed/NVIDIA/build/logs/2020.06.26-21.37.31/Xavier/ssd-small/SingleStreamB4" --logfile_prefix="mlperf_log_" --test_mode="PerformanceOnly" --warmup_duration=5.0 --use_graphs=false --gpu_batch_size=4 --map_path="data_maps/coco/val_map.txt" --tensor_path="${PREPROCESSED_DATA_DIR}/coco/val2017/SSDMobileNet/int8_chw4" --gpu_engines="./build/engines/Xavier/ssd-small/SingleStreamB4/ssd-small-SingleStreamB4-gpu-b4-int8.plan" --performance_sample_count=256 --max_dlas=0 --single_stream_expected_latency_ns=1621000 --mlperf_conf_path="measurements/Xavier/ssd-small/SingleStreamB4/mlperf.conf" --user_conf_path="measurements/Xavier/ssd-small/SingleStreamB4/user.conf" --scenario SingleStreamB4 --model ssd-small --response_postprocess coco
+BenchmarkHarness (
+{'gpu_multi_stream_samples_per_query': 4, 'gpu_batch_size': 4, 'gpu_single_stream_expected_latency_ns': 1621000, 'input_dtype': 'int8', 'input_format': 'chw4', 'map_path': 'data_maps/coco/val_map.txt', 'precision': 'int8', 'tensor_path': '${PREPROCESSED_DATA_DIR}/coco/val2017/SSDMobileNet/int8_chw4', 'use_graphs': False, 'system_id': 'Xavier', 'scenario': 'SingleStreamB4', 'benchmark': 'ssd-small', 'config_name': 'Xavier_ssd-small_SingleStreamB4', 'test_mode': 'PerformanceOnly', 'warmup_duration': 5.0, 'log_dir': '/home/nvidia/data/inference_results_v0.5/closed/NVIDIA/build/logs/2020.06.26-21.37.31'}
+BenchmarkHarness )
+=========================================================
+argstr:
+--plugins="build/plugins/NMSOptPlugin/libnmsoptplugin.so" --logfile_outdir="/home/nvidia/data/inference_results_v0.5/closed/NVIDIA/build/logs/2020.06.26-21.37.31/Xavier/ssd-small/SingleStreamB4" --logfile_prefix="mlperf_log_" --test_mode="PerformanceOnly" --warmup_duration=5.0 --use_graphs=false --gpu_batch_size=4 --map_path="data_maps/coco/val_map.txt" --tensor_path="${PREPROCESSED_DATA_DIR}/coco/val2017/SSDMobileNet/int8_chw4" --gpu_engines="./build/engines/Xavier/ssd-small/SingleStreamB4/ssd-small-SingleStreamB4-gpu-b4-int8.plan" --performance_sample_count=256 --max_dlas=0 --single_stream_expected_latency_ns=1621000 --mlperf_conf_path="measurements/Xavier/ssd-small/SingleStreamB4/mlperf.conf" --user_conf_path="measurements/Xavier/ssd-small/SingleStreamB4/user.conf" --scenario SingleStreamB4 --model ssd-small
+&&&& RUNNING Default_Harness # ./build/bin/harness_default
+[I] mlperf.conf path: measurements/Xavier/ssd-small/SingleStreamB4/mlperf.conf
+[I] user.conf path: measurements/Xavier/ssd-small/SingleStreamB4/user.conf
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+path: measurements/Xavier/ssd-small/SingleStreamB4/mlperf.conf
+model: ssd-small
+scenario: SingleStreamB4
+multi_stream_samples_per_query: 1
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+path: measurements/Xavier/ssd-small/SingleStreamB4/user.conf
+model: ssd-small
+scenario: SingleStreamB4
+multi_stream_samples_per_query: 4
+[I] Device:0: ./build/engines/Xavier/ssd-small/SingleStreamB4/ssd-small-SingleStreamB4-gpu-b4-int8.plan has been successfully loaded.
+[I] Creating batcher thread: 0 EnableBatcherThreadPerDevice: false
+Starting warmup. Running for a minimum of 5 seconds.
+Finished warmup. Ran for 5.02427s.
+================================================
+MLPerf Results Summary
+================================================
+SUT name : LWIS_Server
+Scenario : Single Stream
+Mode     : Performance
+90th percentile latency (ns) : 4449052
+Result is : VALID
+  Min duration satisfied : Yes
+  Min queries satisfied : Yes
+
+================================================
+Additional Stats
+================================================
+QPS w/ loadgen overhead         : 961.91
+QPS w/o loadgen overhead        : 242.99
+
+Min latency (ns)                : 3848550
+Max latency (ns)                : 15248296
+Mean latency (ns)               : 4115345
+50.00 percentile latency (ns)   : 3958506
+90.00 percentile latency (ns)   : 4449052
+95.00 percentile latency (ns)   : 4907119
+97.00 percentile latency (ns)   : 5279840
+99.00 percentile latency (ns)   : 6088193
+99.90 percentile latency (ns)   : 7765768
+
+================================================
+Test Parameters Used
+================================================
+samples_per_query : 4
+target_qps : 616.903
+target_latency (ns): 0
+max_async_queries : 1
+min_duration (ms): 60000
+max_duration (ms): 0
+min_query_count : 1024
+max_query_count : 0
+qsl_rng_seed : 3133965575612453542
+sample_index_rng_seed : 665484352860916858
+schedule_rng_seed : 3622009729038561421
+accuracy_log_rng_seed : 0
+accuracy_log_probability : 0
+print_timestamps : false
+performance_issue_unique : false
+performance_issue_same : false
+performance_issue_same_index : 0
+performance_sample_count : 256
+
+No warnings encountered during test.
+
+No errors encountered during test.
+Device Device:0 processed:
+  14429 batches of size 4
+  Memcpy Calls: 0
+  PerSampleCudaMemcpy Calls: 57716
+  BatchedCudaMemcpy Calls: 0
+&&&& PASSED Default_Harness # ./build/bin/harness_default
+[2020-06-26 21:38:40,716 main.py:155 INFO] Result: 90th percentile latency (ns) : 4449052 and Result is : VALID
+
+======================= Perf harness results: =======================
+
+Xavier-SingleStreamB4:
+    ssd-small: 90th percentile latency (ns) : 4449052 and Result is : VALID
+
+
+======================= Accuracy results: =======================
+
+Xavier-SingleStreamB4:
+    ssd-small: No accuracy results in PerformanceOnly mode.
+
+Elapsed Time: 69 seconds

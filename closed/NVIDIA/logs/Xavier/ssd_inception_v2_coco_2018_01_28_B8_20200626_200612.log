@@ -1,0 +1,100 @@
+[2020-06-26 20:09:40,605 main.py:304 INFO] Using config files: measurements/Xavier/ssd-small/SingleStreamB8/config.json
+[2020-06-26 20:09:40,605 __init__.py:142 INFO] Parsing config file measurements/Xavier/ssd-small/SingleStreamB8/config.json ...
+[2020-06-26 20:09:40,606 main.py:308 INFO] Processing config "Xavier_ssd-small_SingleStreamB8"
+[2020-06-26 20:09:40,606 main.py:118 INFO] Running harness for ssd-small benchmark in SingleStreamB8 scenario...
+[2020-06-26 20:09:40,613 __init__.py:42 INFO] Running command: ./build/bin/harness_default --plugins="build/plugins/NMSOptPlugin/libnmsoptplugin.so" --logfile_outdir="/home/nvidia/data/inference_results_v0.5/closed/NVIDIA/build/logs/2020.06.26-20.09.40/Xavier/ssd-small/SingleStreamB8" --logfile_prefix="mlperf_log_" --test_mode="PerformanceOnly" --warmup_duration=5.0 --use_graphs=false --gpu_batch_size=8 --map_path="data_maps/coco/val_map.txt" --tensor_path="${PREPROCESSED_DATA_DIR}/coco/val2017/SSDMobileNet/int8_chw4" --gpu_engines="./build/engines/Xavier/ssd-small/SingleStreamB8/ssd-small-SingleStreamB8-gpu-b8-int8.plan" --performance_sample_count=256 --max_dlas=0 --single_stream_expected_latency_ns=1621000 --mlperf_conf_path="measurements/Xavier/ssd-small/SingleStreamB8/mlperf.conf" --user_conf_path="measurements/Xavier/ssd-small/SingleStreamB8/user.conf" --scenario SingleStreamB8 --model ssd-small --response_postprocess coco
+BenchmarkHarness (
+{'gpu_multi_stream_samples_per_query': 8, 'gpu_batch_size': 8, 'gpu_single_stream_expected_latency_ns': 1621000, 'input_dtype': 'int8', 'input_format': 'chw4', 'map_path': 'data_maps/coco/val_map.txt', 'precision': 'int8', 'tensor_path': '${PREPROCESSED_DATA_DIR}/coco/val2017/SSDMobileNet/int8_chw4', 'use_graphs': False, 'system_id': 'Xavier', 'scenario': 'SingleStreamB8', 'benchmark': 'ssd-small', 'config_name': 'Xavier_ssd-small_SingleStreamB8', 'test_mode': 'PerformanceOnly', 'warmup_duration': 5.0, 'log_dir': '/home/nvidia/data/inference_results_v0.5/closed/NVIDIA/build/logs/2020.06.26-20.09.40'}
+BenchmarkHarness )
+=========================================================
+argstr:
+--plugins="build/plugins/NMSOptPlugin/libnmsoptplugin.so" --logfile_outdir="/home/nvidia/data/inference_results_v0.5/closed/NVIDIA/build/logs/2020.06.26-20.09.40/Xavier/ssd-small/SingleStreamB8" --logfile_prefix="mlperf_log_" --test_mode="PerformanceOnly" --warmup_duration=5.0 --use_graphs=false --gpu_batch_size=8 --map_path="data_maps/coco/val_map.txt" --tensor_path="${PREPROCESSED_DATA_DIR}/coco/val2017/SSDMobileNet/int8_chw4" --gpu_engines="./build/engines/Xavier/ssd-small/SingleStreamB8/ssd-small-SingleStreamB8-gpu-b8-int8.plan" --performance_sample_count=256 --max_dlas=0 --single_stream_expected_latency_ns=1621000 --mlperf_conf_path="measurements/Xavier/ssd-small/SingleStreamB8/mlperf.conf" --user_conf_path="measurements/Xavier/ssd-small/SingleStreamB8/user.conf" --scenario SingleStreamB8 --model ssd-small
+&&&& RUNNING Default_Harness # ./build/bin/harness_default
+[I] mlperf.conf path: measurements/Xavier/ssd-small/SingleStreamB8/mlperf.conf
+[I] user.conf path: measurements/Xavier/ssd-small/SingleStreamB8/user.conf
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+path: measurements/Xavier/ssd-small/SingleStreamB8/mlperf.conf
+model: ssd-small
+scenario: SingleStreamB8
+multi_stream_samples_per_query: 1
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+path: measurements/Xavier/ssd-small/SingleStreamB8/user.conf
+model: ssd-small
+scenario: SingleStreamB8
+multi_stream_samples_per_query: 8
+[I] Device:0: ./build/engines/Xavier/ssd-small/SingleStreamB8/ssd-small-SingleStreamB8-gpu-b8-int8.plan has been successfully loaded.
+[I] Creating batcher thread: 0 EnableBatcherThreadPerDevice: false
+Starting warmup. Running for a minimum of 5 seconds.
+Finished warmup. Ran for 5.08373s.
+================================================
+MLPerf Results Summary
+================================================
+SUT name : LWIS_Server
+Scenario : Single Stream
+Mode     : Performance
+90th percentile latency (ns) : 17703570
+Result is : VALID
+  Min duration satisfied : Yes
+  Min queries satisfied : Yes
+
+================================================
+Additional Stats
+================================================
+QPS w/ loadgen overhead         : 453.41
+QPS w/o loadgen overhead        : 56.73
+
+Min latency (ns)                : 17458836
+Max latency (ns)                : 19180453
+Mean latency (ns)               : 17628063
+50.00 percentile latency (ns)   : 17621011
+90.00 percentile latency (ns)   : 17703570
+95.00 percentile latency (ns)   : 17732519
+97.00 percentile latency (ns)   : 17751840
+99.00 percentile latency (ns)   : 17788519
+99.90 percentile latency (ns)   : 18349764
+
+================================================
+Test Parameters Used
+================================================
+samples_per_query : 8
+target_qps : 616.903
+target_latency (ns): 0
+max_async_queries : 1
+min_duration (ms): 60000
+max_duration (ms): 0
+min_query_count : 1024
+max_query_count : 0
+qsl_rng_seed : 3133965575612453542
+sample_index_rng_seed : 665484352860916858
+schedule_rng_seed : 3622009729038561421
+accuracy_log_rng_seed : 0
+accuracy_log_probability : 0
+print_timestamps : false
+performance_issue_unique : false
+performance_issue_same : false
+performance_issue_same_index : 0
+performance_sample_count : 256
+
+No warnings encountered during test.
+
+No errors encountered during test.
+Device Device:0 processed:
+  3401 batches of size 8
+  Memcpy Calls: 0
+  PerSampleCudaMemcpy Calls: 27208
+  BatchedCudaMemcpy Calls: 0
+&&&& PASSED Default_Harness # ./build/bin/harness_default
+[2020-06-26 20:10:49,506 main.py:155 INFO] Result: 90th percentile latency (ns) : 17703570 and Result is : VALID
+
+======================= Perf harness results: =======================
+
+Xavier-SingleStreamB8:
+    ssd-small: 90th percentile latency (ns) : 17703570 and Result is : VALID
+
+
+======================= Accuracy results: =======================
+
+Xavier-SingleStreamB8:
+    ssd-small: No accuracy results in PerformanceOnly mode.
+
+Elapsed Time: 69 seconds
