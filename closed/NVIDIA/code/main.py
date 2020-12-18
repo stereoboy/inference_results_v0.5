@@ -63,6 +63,8 @@ def get_benchmark(benchmark_name, conf):
             SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssd_mobilenet_v1_ball_2020_06_11").SSDMobileNet
         elif model_name == 'ssd_mobilenet_v1_ball_kernel_1_2020_06_23':
             SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_ssd_mobilenet_v1_ball_kernel_1_2020_06_23").SSDMobileNet
+        else:
+            SSDMobileNet = import_module("code.ssd-small.tensorrt.SSDMobileNet_for_{}".format(model_name)).SSDMobileNet
         return SSDMobileNet(conf)
     elif benchmark_name == "ssd-large":
         SSDResNet34 = import_module("code.ssd-large.tensorrt.SSDResNet34").SSDResNet34
@@ -363,6 +365,7 @@ def main():
             handle_run_harness(benchmark_name, benchmark_conf, need_gpu, need_dla)
         elif main_args["action"] == "calibrate":
             # To generate calibration cache, we only need to run each benchmark once. Use offline config.
+            print(benchmark_conf["scenario"])
             if benchmark_conf["scenario"] == "Offline":
                 handle_calibrate(benchmark_name, benchmark_conf)
 
